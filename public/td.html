@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Technical Director</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="fonts.css" />
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body class="viewer-body">
+    <div class="innerChild">
+      <!-- 24-hour clock -->
+      <div class="flex verticalCenter">
+        <!-- <div class="timeIs">Time is &nbsp</div> -->
+        <div id="clock" class="left-text offWhiter"></div>
+      </div>
+
+      <!-- Countdown timer -->
+      <div id="countdown" class="left-text"></div>
+
+      <div class="bontHainer">
+        <div class="leftBontHainer">
+          <!-- Now Playing / Next Up -->
+          <div id="currentItemLine" class="left-text td"></div>
+        </div>
+
+        <div class="techNotes">
+          <div class="nextItemLine bold">Next</div>
+
+          <!-- Next Up -->
+          <div id="nextItemLine" class="left-text"></div>
+        </div>
+      </div>
+
+      <div class="left-text techNotesNew">
+        <!-- TD & Talent Notes -->
+        <div class="pastelHeading">Tech Note</div>
+        <div id="tdNoteLine" class="note"></div>
+        <div class="pastelHeading">Talent Note</div>
+        <div id="talentNoteLine" class="note"></div>
+      </div>
+    </div>
+
+    <script>
+      const socket = io();
+
+      let serverTimeOffset = 0;
+      let scheduleActive = false;
+      let timeLeft = 0;
+      let lastServerSync = Date.now();
+
+      let currentTitle = "";
+      let currentPresenter = "";
+      let nextTitle = "";
+      let nextPresenter = "";
+      let tdNote = "";
+      let talentNote = "";
+
+      /* ---------------------------------------------
+       1) Receive Server Updates for Schedule
+    --------------------------------------------- */
+      socket.on("schedule update", (data) => {
+        scheduleActive = data.active;
+        if (!scheduleActive) {
+          document.getElementById("countdown").textContent = "";
+          document.getElementById("currentItemLine").textContent = "";
+          document.getElementById("nextItemLine").textContent = "";
+          document.getElementById("tdNoteLine").textContent = "";
+          document.getElementById("talentNoteLine").textContent = "";
+          return;
+        }
+
+        // Sync time with the server
+        lastServerSync = Date.now();
+        serverTimeOffset = lastServerSync - data.serverTime;
+
+        // Sync countdown time
+        timeLeft = data.timeLeft;
+        currentTitle = data.currentTitle || "Untitled";
+        currentPresenter = data.currentPresenter || "";
+        nextTitle = data.nextTitle || "No more items";
+        nextPresenter = data.nextPresenter || "";
+        tdNote = data.tdNote || "";
+        talentNote = data.talentNote || "";
+
+        document.getElementById(
+          "currentItemLine"
+        ).innerHTML = ` ${currentTitle} <br> ${currentPresenter}`;
+        document.getElementById(
+          "nextItemLine"
+        ).innerHTML = ` ${nextTitle} <br> ${nextPresenter}`;
+        document.getElementById("tdNoteLine").innerHTML = ` ${tdNote}`;
+        document.getElementById("talentNoteLine").innerHTML = ` ${talentNote}`;
+      });
+
+      /* ---------------------------------------------
+       2) Sync Clock with Server Time
+    --------------------------------------------- */
+      function updateAll() {
+        const now = new Date();
+
+        // Clock (HH:MM:SS)
+        const hh = String(now.getHours()).padStart(2, "0");
+        const mm = String(now.getMinutes()).padStart(2, "0");
+        const ss = String(now.getSeconds()).padStart(2, "0");
+        document.getElementById("clock").textContent = `${hh}:${mm}:${ss}`;
+
+        // Countdown Timer
+        if (scheduleActive) {
+          const elapsedTime = Math.floor(
+            (Date.now() - lastServerSync - serverTimeOffset) / 1000
+          );
+          const adjustedTimeLeft = Math.max(timeLeft - elapsedTime, 0);
+
+          const h = String(Math.floor(adjustedTimeLeft / 3600)).padStart(
+            2,
+            "0"
+          );
+          const m = String(Math.floor((adjustedTimeLeft % 3600) / 60)).padStart(
+            2,
+            "0"
+          );
+          const s = String(adjustedTimeLeft % 60).padStart(2, "0");
+
+          document.getElementById("countdown").textContent = `${h}:${m}:${s}`;
+        }
+      }
+
+      /* ---------------------------------------------
+       3) Display Messages from Producer
+    --------------------------------------------- */
+      socket.on("viewer update", (message) => {
+        const overlay = document.getElementById("overlay");
+        const overlayMessage = document.getElementById("overlayMessage");
+
+        if (message.trim() !== "") {
+          overlayMessage.textContent = message;
+          overlay.classList.add("visible");
+        } else {
+          overlay.classList.remove("visible");
+        }
+      });
+
+      // Start updating the clock and countdown every second
+      setInterval(updateAll, 1000);
+      updateAll();
+    </script>
+  </body>
+</html>

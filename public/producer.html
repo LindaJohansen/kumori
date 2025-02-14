@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Producer</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="fonts.css" />
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body class="producer-body">
+    <div class="producer-container">
+      
+      <!-- Left Section: Messaging -->
+      <div class="left-main">
+        <h2>Message</h2>
+        <div class="message-controls">
+          <textarea id="messageInput" placeholder="Enter your message"></textarea>
+          <div class="button-row">
+            <button id="sendButton" class="pastel-btn">Send</button>
+            <button id="clearButton" class="pastel-btn">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Section: Schedule Controls -->
+      <div class="right-main">
+        <h2>Schedule</h2>
+        <div class="button-row">
+          <button id="addItemBtn" class="pastel-btn">Add</button>
+          <button id="deleteItemBtn" class="pastel-btn">Delete</button>
+          <button id="startScheduleBtn" class="pastel-btn">Start</button>
+        </div>
+        <table id="scheduleTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>TITLE</th>
+              <th>PRESENTER</th>
+              <th>MINUTES</th>
+              <th>TECH NOTE</th>
+              <th>TALENT NOTE</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="button-row">
+          <button id="prevItemBtn" class="pastel-btn">Previous</button>
+          <button id="nextItemBtn" class="pastel-btn">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load External JS File -->
+    <script src="producer.js"></script>
+  </body>
+</html>

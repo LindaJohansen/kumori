@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Viewer</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="fonts.css" />
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body class="viewer-body">
+    <!-- 24-hour clock -->
+    <div id="clock" class="center-text redText"></div>
+    <div class="label center-text">Time</div>
+
+    <!-- Countdown timer -->
+    <div id="countdown" class="center-text"></div>
+
+    <!-- Now Playing / Next Up -->
+    <div id="currentItemLine" class="center-text viewerStyle"></div>
+    <div id="nextItemLine" class="center-text"></div>
+
+    <!-- Overlay for producer messages -->
+    <div id="overlay" class="overlayFull">
+      <div id="overlayMessage"></div>
+    </div>
+
+    <script>
+      const socket = io();
+
+      let serverTimeOffset = 0; // Difference between server and client time in milliseconds
+      let scheduleActive = false;
+      let timeLeft = 0;
+      let lastServerSync = Date.now();
+
+      let currentTitle = "";
+      let currentPresenter = "";
+      let nextTitle = "";
+      let nextPresenter = "";
+
+      /* ---------------------------------------------
+       1) Receive Server Updates for Schedule
+    --------------------------------------------- */
+      socket.on("schedule update", (data) => {
+        scheduleActive = data.active;
+        if (!scheduleActive) {
+          document.getElementById("countdownLabel").textContent = "Countdown";
+          document.getElementById("countdown").textContent = "";
+          document.getElementById("currentItemLine").textContent = "";
+          document.getElementById("nextItemLine").textContent = "";
+          return;
+        }
+
+        // Calculate time offset between client and server
+        lastServerSync = Date.now();
+        serverTimeOffset = lastServerSync - data.serverTime;
+
+        // Sync countdown time
+        timeLeft = data.timeLeft;
+        currentTitle = data.currentTitle || "Untitled";
+        currentPresenter = data.currentPresenter || "";
+        nextTitle = data.nextTitle || "No more items";
+        nextPresenter = data.nextPresenter || "";
+
+        // If you want to add a word like "Now or "Next" before the display of the current and next elements, add text after the ` and before the $ bewlow:
+        document.getElementById(
+          "currentItemLine"
+        ).textContent = ` ${currentTitle} – ${currentPresenter}`;
+        document.getElementById(
+          "nextItemLine"
+        ).textContent = ` ${nextTitle} – ${nextPresenter}`;
+      });
+
+      /* ---------------------------------------------
+       2) Sync Clock with Server Time
+    --------------------------------------------- */
+      function updateAll() {
+        const now = new Date();
+
+        // Clock (HH:MM:SS)
+        const hh = String(now.getHours()).padStart(2, "0");
+        const mm = String(now.getMinutes()).padStart(2, "0");
+        const ss = String(now.getSeconds()).padStart(2, "0");
+        document.getElementById("clock").textContent = `${hh}:${mm}:${ss}`;
+
+        // Countdown Timer
+        if (scheduleActive) {
+          const elapsedTime = Math.floor(
+            (Date.now() - lastServerSync - serverTimeOffset) / 1000
+          );
+          const adjustedTimeLeft = Math.max(timeLeft - elapsedTime, 0);
+
+          const h = String(Math.floor(adjustedTimeLeft / 3600)).padStart(
+            2,
+            "0"
+          );
+          const m = String(Math.floor((adjustedTimeLeft % 3600) / 60)).padStart(
+            2,
+            "0"
+          );
+          const s = String(adjustedTimeLeft % 60).padStart(2, "0");
+
+          document.getElementById("countdown").textContent = `${h}:${m}:${s}`;
+        }
+      }
+
+      /* ---------------------------------------------
+       3) Display Messages from Producer
+    --------------------------------------------- */
+      socket.on("viewer update", (message) => {
+        const overlay = document.getElementById("overlay");
+        const overlayMessage = document.getElementById("overlayMessage");
+
+        if (message.trim() !== "") {
+          overlayMessage.textContent = message;
+          overlay.classList.add("visible");
+        } else {
+          overlay.classList.remove("visible");
+        }
+      });
+
+      // Start updating the clock and countdown every second
+      setInterval(updateAll, 1000);
+      updateAll();
+    </script>
+  </body>
+</html>
