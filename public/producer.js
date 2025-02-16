@@ -12,7 +12,7 @@ function sendMessage() {
   if (message) {
     socket.emit('producer message', message);
     sendButton.style.backgroundColor = '#FF4500';
-    sendButton.style.borderColor = '#FF4500';
+    // sendButton.style.borderColor = '#FF4500';
     sendButton.textContent = 'Sent';
   }
 }
@@ -58,6 +58,25 @@ function renderScheduleTable() {
     </tr>
   `).join('');
 }
+
+// Keyboard shortcuts for Next and Previous buttons using Option + ArrowRight/ArrowLeft
+document.addEventListener('keydown', (e) => {
+  if (e.altKey && e.key === 'ArrowRight') {
+    e.preventDefault();
+    document.getElementById('nextItemBtn').click();
+  } else if (e.altKey && e.key === 'ArrowLeft') {
+    e.preventDefault();
+    document.getElementById('prevItemBtn').click();
+  }
+});
+
+// Keyboard shortcuts for Starting Schedule using Option + Enter
+document.addEventListener('keydown', (e) => {
+  if (e.altKey && e.key === 'Enter') {
+    e.preventDefault();
+    document.getElementById('startScheduleBtn').click();
+  }
+});
 
 // Listen for blur events to update scheduleItems array
 document.addEventListener('blur', (e) => {

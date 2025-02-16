@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Technical Director</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="fonts.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body class="viewer-body">
+    <div class="innerChild">
+      <!-- Countdown timer -->
+      <div id="countdown" class="center-text leftMarginAdjustment"></div>
+
+      <div class="bontHainer">
+        <div class="leftBontHainer flex">
+          <!-- Now Playing -->
+          <div class="borderContainer leftPaddingMedium topPaddingSmall">
+            <div class="currentItemLine">NOW</div>
+            <div id="currentItemLine" class="left-text td"></div>
+          </div>
+
+          <!-- Next Up -->
+          <div class="borderContainerOutline leftPaddingMedium topPaddingSmall">
+            <div class="nextItemLine bold">NEXT</div>
+            <div id="nextItemLine" class="left-text td"></div>
+          </div>
+
+          <div class="borderContainerOutline leftPaddingMedium topPaddingSmall">
+            <div class="clockItemLine offWhite bold">TIME</div>
+            <div id="clock" class="left-text clockSmall"></div>
+          </div>
+        </div>
+
+        <div class="left-text techNotesNew flex">
+          <!-- TD & Talent Notes -->
+          <div class="noteContainer">
+            <div class="redText"><h3>Tech Note</h3></div>
+            <div id="tdNoteLine" class="note"></div>
+          </div>
+
+          <div class="noteContainer">
+            <div class="redText"><h3>Talent Note</h3></div>
+            <div id="talentNoteLine" class="note"></div>
+          </div>
+        </div>
+      </div>
+      <!-- 24-hour clock -->
+    </div>
+
+    <!-- Configuration for common.js -->
+    <script>
+      window.scheduleConfig = {
+        clock: { id: "clock", useHtml: false },
+        countdown: { id: "countdown", useHtml: false },
+        currentItemLine: { id: "currentItemLine", useHtml: true },
+        nextItemLine: { id: "nextItemLine", useHtml: true },
+        tdNoteLine: { id: "tdNoteLine", useHtml: true },
+        talentNoteLine: { id: "talentNoteLine", useHtml: true },
+        // No overlay configured for this page.
+      };
+    </script>
+    <script src="common.js"></script>
+    <script src="fullscreen.js"></script>
+  </body>
+</html>

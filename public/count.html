@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Viewer</title>
+    <title>Countdown</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="fonts.css" />
     <script src="/socket.io/socket.io.js"></script>
@@ -12,31 +12,27 @@
     <link rel="manifest" href="/site.webmanifest" />
   </head>
   <body class="viewer-body">
+    <div class="innerChild">
+    <!-- 24-hour clock -->
+    <!-- even though this clock isn't displayed on the page, removing it breaks the countdown -->
+    <div id="clock" class="center-text displayNone"></div>
+
     <!-- Countdown timer -->
-    <div id="countdown" class="center-text"></div>
+    <div id="countdown" class="center-text leftMarginAdjustment"></div>
 
     <!-- Now Playing / Next Up -->
-    <div class="currentCentered borderContainer negativeTopMargin">
-      <div
-        id="currentItemLine"
-        class="center-text viewerStyle offWhite"
-      ></div>
-      <div id="talentNoteLine" class="center-text countdownStyle"></div>
+    <div class="borderContainer currentCentered leftPaddingMedium topPaddingSmall">
+      <div id="currentItemLine" class="left-text viewerStyle offWhite"></div>
+      <div id="talentNoteLine" class="left-text countdownStyle"></div>
     </div>
-    <div class="borderContainer nextUpCentered">
-      <div class="nextItemLine center-text bold">Next</div>
-      <div id="nextItemLine" class="center-text hiii"></div>
-    </div>
-
-    <!-- 24-hour clock -->
-    <div id="clock" class="center-text offWhiter clockMedium"></div>
-    <div class="label labelMedium center-text negativeTopMargin">
-      Current Time
+    <div class="borderContainer nextUpCentered leftPaddingMedium topPaddingSmall">
+      <div class="nextItemLine left-text bold">Next</div>
+      <div id="nextItemLine" class="left-text hiii offWhite"></div>
     </div>
 
     <!-- Overlay for producer messages -->
     <div id="overlay" class="overlayBottom">
-      <div id="overlayMessage" class="left-text"></div>
+      <div id="overlayMessage"></div>
     </div>
 
     <!-- Configuration for common.js -->
@@ -45,7 +41,8 @@
         clock: { id: "clock", useHtml: false },
         countdown: { id: "countdown", useHtml: false },
         currentItemLine: { id: "currentItemLine", useHtml: false },
-        nextItemLine: { id: "nextItemLine", useHtml: false },
+        // For this page we want to prepend a "Next" label with formatting:
+        nextItemLine: { id: "nextItemLine", useHtml: true, prefix: "" },
         talentNoteLine: { id: "talentNoteLine", useHtml: true },
         overlay: { id: "overlay" },
         overlayMessage: { id: "overlayMessage" },
@@ -53,5 +50,6 @@
     </script>
     <script src="common.js"></script>
     <script src="fullscreen.js"></script>
+  </div>
   </body>
 </html>

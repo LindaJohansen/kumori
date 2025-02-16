@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Producer</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="fonts.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+
+  <body class="producer-body">
+    <!-- Left Section: Messaging -->
+    <div class="producer-container">
+      <div class="left-main">
+        <h2>Message</h2>
+        <p>Send a message that shows up on other screens.</p>
+        <div class="message-controls">
+          <textarea
+            id="messageInput"
+            placeholder="Enter your message"
+          ></textarea>
+          <div class="button-row">
+            <button id="sendButton" class="pastel-btn">Send</button>
+            <button id="clearButton" class="secondary-btn">Clear</button>
+          </div>
+        </div>
+        <h2>Keyboard Shortcuts</h2>
+        <ul>
+          <li><span class="shortCut">Enter</span>Send Message</li>
+          <li><span class="shortCut">⌘ + Enter</span>Clear Message</li>
+          <li><span class="shortCut">⌥ + Right Arrow</span>Next Item</li>
+          <li><span class="shortCut">⌥ + Left Arrow</span>Previous Item</li>
+          <li><span class="shortCut">⌥ + Enter</span>Start Schedule</li>
+        </ul>
+      </div>
+
+      <!-- Right Section: Schedule Controls -->
+      <div class="right-main">
+        <h2>Schedule</h2>
+        <p>
+          Add items to the schedule, set durations, and click "start" to start
+          the countdown.
+        </p>
+        <div class="flex spaceBetween">
+          <div class="button-row">
+            <button id="addItemBtn" class="pastel-btn">Add</button>
+            <button id="deleteItemBtn" class="pastel-btn">Delete</button>
+            <button id="startScheduleBtn" class="pastel-btn">Start</button>
+          </div>
+          <div class="button-row">
+            <button id="prevItemBtn" class="pastel-btn">Previous</button>
+            <button id="nextItemBtn" class="pastel-btn">Next</button>
+          </div>
+        </div>
+
+        <table id="scheduleTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Presenter</th>
+              <th>Minutes</th>
+              <th>Tech Note</th>
+              <th>Talent Note</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Load External JS File -->
+    <script src="producer.js"></script>
+  </body>
+</html>

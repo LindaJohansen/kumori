@@ -3,19 +3,56 @@
   --text-color: #fff;
   --label-text-color: #fff;
   --clock-countdown-color: #cc0000;
-  --next-item-color: hsl(141, 40%, 51%);
+
   --border-color: #ccc;
-  --pastel-btn-bg: #b3e0dc;
-  --pastel-heading: #e2b08d;
-  --pastel-btn-border: #acd9d7;
-  --pastel-btn-hover-bg: #c3e8e5;
+  --pastel-heading: #a69cf4;
+
+  --pastel-btn-bg: #ebd0bc;
+  --pastel-btn-hover-bg: #eed7c5;
   --button-text-color: #000;
+  --secondary-button-text-color: hsl(0,0,90);
+
+  --secondary-btn-bg: #767472;
+  --secondary-btn-hover-bg: #908e8d;
+
   --overlay-bg: rgba(0, 0, 0, 1);
   --table-border: #444;
-  --table-header-bg: hsl(175, 42%, 20%);
-  --active-row-bg: rgb(255, 69, 0);
+
+  --active-row-bg: rgb(235, 63, 0);
+  --next-item-color: hsl(141, 40%, 51%);
+
   --off-white: hsl(0, 0%, 90%);
   --off-whiter: hsl(0, 0%, 71%);
+  --almost-black: hsl(0, 0%, 5%);
+
+  
+  /** Base colors */
+  --clr-dark-a0: #000000;
+  --clr-light-a0: #ffffff;
+  
+  /** Dark theme primary colors */
+  --clr-primary-a0: #ebd0bc;
+  --clr-primary-a10: #edd5c3;
+  --clr-primary-a20: #f0dacb;
+  --clr-primary-a30: #f2dfd2;
+  --clr-primary-a40: #f4e5d9;
+  --clr-primary-a50: #f7eae1;
+  
+  /** Dark theme surface colors */
+  --clr-surface-a0: #000406;
+  --clr-surface-a10: #1e2021;
+  --clr-surface-a20: #353d43;
+  --clr-surface-a30: #4e555b;
+  --clr-surface-a40: #696f74;
+  --clr-surface-a50: #858a8e;
+  
+  /** Dark theme tonal surface colors */
+  --clr-surface-tonal-a0: #1a2025;
+  --clr-surface-tonal-a10: #2f3539;
+  --clr-surface-tonal-a20: #464b4f;
+  --clr-surface-tonal-a30: #5d6266;
+  --clr-surface-tonal-a40: #767a7e;
+  --clr-surface-tonal-a50: #909396;
 }
 
 /* Reset / Global */
@@ -30,11 +67,32 @@ body {
   height: 100%;
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: Arial, sans-serif;
+  font-family: Poppins, Arial, sans-serif;
+}
+
+h2{
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+h3{
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+
+p{
+  font-size: 18px;
+  margin-bottom: 40px;
+  max-width: 45ch;
 }
 
 .flex {
   display: flex;
+}
+
+.spaceBetween{
+  justify-content: space-between;
 }
 
 .verticalCenter {
@@ -56,23 +114,38 @@ body {
   text-align: left;
 }
 
+.right-text {
+  text-align: right;
+}
+
 /* Labels (e.g., Current Time, Countdown) */
 .label {
   color: var(--label-text-color);
-  margin-bottom: 60px;
+  font-family: Azeret Mono, Arial sans-serif;
+}
+
+.labelMedium{
   font-size: 3rem;
+  margin-bottom: 50px;
+}
+
+.labelSmall{
+  font-size: 2rem;
+  margin-bottom: 30px;
 }
 
 /* Clock  styling */
 #clock {
-  font-size: 12rem;
   font-weight: bold;
   font-family: Azeret Mono, Arial sans-serif;
 }
 
-.timeIs {
-  font-size: 8rem;
-  font-weight: bold;
+.clockMedium{
+  font-size: 10rem;
+}
+
+.clockSmall{
+  font-size: 5rem;
 }
 
 .offWhite {
@@ -83,10 +156,9 @@ body {
   color: var(--off-whiter);
 }
 
-.redText {
-  color: var(--clock-countdown-color);
+.redText{
+  color: var(--active-row-bg);
 }
-
 /* Countdown styling */
 #countdown {
   font-size: 17vw;
@@ -95,34 +167,61 @@ body {
   font-family: Azeret Mono, Arial sans-serif;
 }
 
-#currentItemLine {
-  margin-bottom: 40px;
-  font-weight: bold;
+.negativeTopMargin{
+  margin-top: -40px;
+}
+
+
+.nextItemLine {
+  font-size: 2.4rem;
+  color: var(--next-item-color);
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+}
+
+.currentItemLine {
+  font-size: 2.4rem;
+  color: var(--active-row-bg);
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+}
+
+.clockItemLine {
+  font-size: 2.4rem;
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
 }
 
 .pastelHeading {
   color: var(--pastel-heading);
-  font-weight: bold;
 }
 
 .td {
   font-size: 3rem;
-  margin-bottom: 40px;
-  font-weight: bold;
 }
 
 .viewerStyle {
-  font-size: 5rem;
-  margin-bottom: 40px;
-  font-weight: bold;
+  font-size: 4rem;
+  margin-bottom: 20px;
+  font-weight: 700;
 }
 
 .techNotes {
   width: 40%;
 }
 
+.noteContainer{
+  background-color: var(--clr-surface-a10);
+  padding: 22px;
+  border-radius: 8px;
+  height: 100%;
+}
+
 .techNotesNew {
   font-size: 2rem;
+  width: 40%;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 #tdNoteLine {
@@ -132,30 +231,10 @@ body {
 .countdownStyle {
   font-size: 2.6rem;
   height: 90px;
-  color: var(--pastel-heading);
-}
-
-
-#nextItemLine {
-  font-size: 3rem;
-  color: var(--next-item-color);
-}
-
-
-.nextItemLine {
-  font-size: 3rem;
-  color: var(--next-item-color);
 }
 
 .bold {
   font-weight: bold;
-}
-
-/* Producer messages display area */
-#displayArea {
-  font-size: 2rem;
-  text-align: center;
-  margin-top: 20px;
 }
 
 /* Producer Body: center everything */
@@ -166,6 +245,7 @@ body {
   align-items: center;
   min-height: 100vh;
   margin: 0;
+  background-color: var(--almost-black);  
 }
 
 /* Producer Container */
@@ -174,17 +254,12 @@ body {
   /* flex-direction: column; */
   gap: 6rem;
   margin: 0 auto;
-  width: 85vw;
+  width: 90vw;
   margin-top: 90px;
 }
 
 .left-main {
-  width: 50%;
-}
-
-.left-main h2,
-.right-main h2 {
-  margin-bottom: 30px;
+  width: 40%;
 }
 
 .right-main {
@@ -247,6 +322,23 @@ textarea#messageInput {
   background-color: var(--pastel-btn-hover-bg);
 }
 
+/* Pastel button styles */
+.secondary-btn {
+  background-color: var(--clr-surface-tonal-a50);
+  color: var(--button-text-color);
+  border: 0px;
+  border-radius: 4px;
+  padding: 0.7rem 1.3rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: bold;
+}
+
+.secondary-btn:hover {
+  background-color: var(--secondary-btn-hover-bg);
+}
+
 /* Overlay for messages */
 .overlayFull {
   position: fixed;
@@ -283,7 +375,6 @@ textarea#messageInput {
 
 #overlayMessage {
   font-size: 5rem;
-  text-align: left;
   color: var(--text-color);
   padding: 20px;
   max-width: 80%;
@@ -348,14 +439,24 @@ textarea#messageInput {
 }
 
 #scheduleTable tbody tr {
-  height: 54px;
+  height: 58px;
+  background-color: black;
 }
 
 /* Header styling */
 #scheduleTable th {
   text-align: left;
   font-weight: bold;
-  background-color: var(--table-header-bg);
+  background-color: var(--clr-surface-a10);
+  height: 60px;
+}
+
+#scheduleTable thead :first-of-type{
+  border-top-left-radius: 4px;
+}
+
+#scheduleTable thead :last-of-type{
+  border-top-right-radius: 4px;
 }
 
 /* New: Active row number cell style */
@@ -369,16 +470,80 @@ textarea#messageInput {
 
 .bontHainer {
   display: flex;
-  justify-content: space-between;
-  gap: 2rem;
+  /* justify-content: space-between; */
+  gap: 1rem;
+  height: 100%;
 }
 
 .leftBontHainer {
   width: 60%;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.leftPaddingMedium{
+  padding-left: 24px;
+}
+
+.topPaddingSmall{
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .innerChild {
-  /* background-color: red; */
   width: 90vw;
   margin: 0 auto;
+}
+
+.borderContainer{
+  border-radius: 8px;
+  background-color: var(--clr-surface-a10);
+  margin-bottom: 2rem;
+}
+
+
+.borderContainerOutline{
+  border-radius: 8px;
+  border: 5px solid var(--clr-surface-a10);
+}
+
+.currentCentered{
+  width: 80%;
+  /* margin: 0 auto 20px auto; */
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+.nextUpCentered{
+  width: 50%;
+  /* margin: 0 auto; */
+  padding-top: 1rem;
+  padding-bottom: 30px;
+}
+
+.hiii{
+  font-size: 3rem;
+}
+
+.leftMarginAdjustment{
+  margin-left: -60px;
+}
+
+ul{
+  list-style: none;
+}
+
+ul li{
+  margin-bottom: 20px;
+}
+
+.shortCut{
+  /* background-color: var(--clr-surface-a10); */
+  border: solid 2px var(--clr-surface-a30);
+  padding: 6px 8px 6px 8px;
+  border-radius: 4px;
+  margin-right: 10px;
+  color: var(--off-white);
+  font-weight: 600;
 }

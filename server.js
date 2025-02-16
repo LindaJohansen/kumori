@@ -10,17 +10,17 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes for Producer, Viewer, Countdown, and TD pages
-app.get('/producer', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'producer.html'));
+app.get('/prod', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'prod.html'));
 });
 app.get('/viewer', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'viewer.html'));
 });
-app.get('/countdown', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'countdown.html'));
+app.get('/count', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'count.html'));
 });
-app.get('/td', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'td.html'));
+app.get('/tech', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'tech.html'));
 });
 
 /* -------------------------------------
